@@ -6,32 +6,56 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:17:41 by arotondo          #+#    #+#             */
-/*   Updated: 2024/06/26 16:02:42 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/07/04 15:17:07 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	int		i;
 	int		fd;
-	char	*next_line;
+	int		i;
+	char	*line;
 
-	i = 0;
-	fd = open("test.txt", O_RDONLY);
+	if (argc != 2)
+		return (1);
+	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		return (printf("Error opening file"));
-	while (1)
+		return (1);
+	line = get_next_line(fd);
+	i = 1;
+	printf("{line %d} : %s\n", i, line);
+	while (line != NULL)
 	{
-		next_line = get_next_line(fd);
-		if (!next_line)
-			break ;
-		printf("[%d]: %s\n", i, next_line);
+		free(line);
+		line = get_next_line(fd);
 		i++;
-		free (next_line);
-		next_line = NULL;
+		printf("{line %d} : %s\n", i, line);
 	}
-	close(fd);
+	free (line);
+	close (fd);
 	return (0);
 }
+
+// int	main(void)
+// {
+// 	int		i;
+// 	int		fd;
+// 	char	*next_line;
+
+// 	i = 0;
+// 	fd = open("test.txt", O_RDONLY);
+// 	if (fd == -1)
+// 		return (printf("Error opening file"));
+// 	while (i < 20)
+// 	{
+// 		next_line = get_next_line(fd);
+// 		printf("[%d]: %s\n", i, next_line);
+// 		i++;
+// 		next_line = NULL;
+// 		free (next_line);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }

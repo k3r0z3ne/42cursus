@@ -6,15 +6,22 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 12:11:12 by arotondo          #+#    #+#             */
-/*   Updated: 2024/06/26 16:36:59 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:44:16 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
-#endif
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+
+# endif
+
+# ifndef MAX_FD
+#  define MAX_FD 1024
+
+# endif
 
 # include <stddef.h>
 # include <unistd.h>
@@ -26,10 +33,10 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
-char	*ft_strchr(char *str, int to_find);
 char	*ft_strdup(char *src);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(char const *s);
+void	*ft_calloc(size_t nmemb, size_t size);
+char	*ft_strchr(char *str, int to_find);
 
 #endif

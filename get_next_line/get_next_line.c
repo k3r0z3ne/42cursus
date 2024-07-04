@@ -5,70 +5,107 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 12:10:58 by arotondo          #+#    #+#             */
-/*   Updated: 2024/06/26 16:37:23 by arotondo         ###   ########.fr       */
+/*   Created: 2024/07/01 15:09:22 by arotondo          #+#    #+#             */
+/*   Updated: 2024/07/04 18:12:03 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//size_t read(int fd, void *buf, size_t count);
-
 #include "get_next_line.h"
 
-static char	*set_line(char *buffer_line)
+char	*next_line(char *buffer)
 {
-	static char	*line;
-	size_t		len;
+	size_t	i;
+	size_t	j;
+	size_t	len;
+	char	*tmp;
 
-	line = NULL;
-	len = ft_strlen(buffer_line) + ft_strlen(line);
-	line = (char *)malloc(sizeof(char));
+	i = 0;
+	len = ft_strlen(buffer);
+	while (buffer[i] != '\n' && buffer[i] != '\0')
+		i++;
+	tmp = (char *)ft_calloc(sizeof(char), len - i + 1);
+	if (!tmp)
+		return (NULL);
+	if (buffer[i] == '\n')
+		i++;
+	j = 0;
+	while (buffer[i + j] != '\0')
+	{
+		tmp[j] = buffer[i + j];
+		j++;
+	}
+	return (free (buffer), tmp);
+}
+
+char	*set_line(char *buffer)
+{
+	char	*line;
+	size_t	i;
+
+	i = 0;
+	if (!buffer[i])
+		return (NULL);
+	while (buffer[i] != '\0' && buffer[i] != '\n')
+		i++;
+	line = (char *)ft_calloc(sizeof(char), i + 2);
 	if (!line)
 		return (NULL);
-	line = ft_strjoin(line, buffer_line);
-	free (buffer_line);
+	i = 0;
+	while (buffer[i] != '\0' && buffer[i] != '\n')
+	{
+		line[i] = buffer[i];
+		i++;
+	}
+	if (buffer[i] == '\n')
+		line[i] = '\n';
 	return (line);
 }
 
-static char	*read_line(int fd, char *buffer)
+char	*read_line(int fd, char *buffer)
 {
+	char	*tmp;
 	ssize_t	bytes_read;
-	ssize_t	i;
-	char	*buffer_line;
-	char 	*rest;
 
-	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	if (bytes_read == -1)
-		return (NULL);
-	i = 0;
-	rest = NULL;
-	while (i < bytes_read)
+	if (buffer == NULL)
 	{
-		if (buffer[i] == '\n')
-			rest = buffer + i;
-		if (rest)
-		{
-			buffer_line = ft_substr(rest, i, (bytes_read - i));
-			return (set_line(buffer_line));
-		}
-		i++;
+		buffer = (char *)ft_calloc(sizeof(char), 1);
+		if (!buffer)
+			return (NULL);
 	}
-	buffer_line = (char *)malloc(sizeof(char) * bytes_read + 1);
-	if (!buffer_line)
+	tmp = (char *)ft_calloc(sizeof(char), BUFFER_SIZE + 1);
+	if (!tmp)
 		return (NULL);
-	buffer_line = ft_strdup(buffer);
-	return (set_line(buffer_line));
+	bytes_read = 1;
+	while (bytes_read > 0 && (!ft_strchr(buffer, '\n')))
+	{
+		bytes_read = read(fd, tmp, BUFFER_SIZE);
+		if (bytes_read == -1)
+			return (free (buffer), free(tmp), NULL);
+		tmp[bytes_read] = '\0';
+		buffer = ft_strjoin(buffer, tmp);
+		if (!buffer)
+			break ;
+	}
+	return (free (tmp), buffer);
 }
 
 char	*get_next_line(int fd)
 {
-	char			*line;
-	static char		*buffer;
+	char		*line;
+	static char	*stat_buffer = NULL;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0)
+	{
+		free(stat_buffer);
+		stat_buffer = NULL;
 		return (NULL);
-	buffer = malloc(sizeof(char) * BUFFER_SIZE);
-	if (!buffer)
+	}
+	stat_buffer = read_line(fd, stat_buffer);
+	if (!stat_buffer)
 		return (NULL);
-	line = read_line(fd, buffer);
+	line = set_line(stat_buffer);
+	stat_buffer = next_line(stat_buffer);
+	if (stat_buffer == NULL)
+		free (stat_buffer);
 	return (line);
 }
