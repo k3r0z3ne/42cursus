@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/05 13:07:08 by arotondo          #+#    #+#             */
-/*   Updated: 2024/07/05 13:08:42 by arotondo         ###   ########.fr       */
+/*   Created: 2024/07/01 15:09:22 by arotondo          #+#    #+#             */
+/*   Updated: 2024/07/05 13:23:27 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*next_line(char *buffer)
 {
@@ -92,26 +92,26 @@ char	*read_line(int fd, char *buffer)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*stat_buffer;
+	static char	*stat_buffer[MAX_FD];
 
 	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0)
 	{
-		free(stat_buffer);
-		stat_buffer = NULL;
+		free(stat_buffer[fd]);
+		stat_buffer[fd] = NULL;
 		return (NULL);
 	}
-	stat_buffer = read_line(fd, stat_buffer);
-	if (!stat_buffer)
+	stat_buffer[fd] = read_line(fd, stat_buffer[fd]);
+	if (!stat_buffer[fd])
 		return (NULL);
-	line = set_line(stat_buffer);
+	line = set_line(stat_buffer[fd]);
 	if (!line || line[0] == '\0')
 	{
-		free (stat_buffer);
-		stat_buffer = NULL;
+		free (stat_buffer[fd]);
+		stat_buffer[fd] = NULL;
 		return (NULL);
 	}
-	stat_buffer = next_line(stat_buffer);
-	if (stat_buffer == NULL)
-		free (stat_buffer);
+	stat_buffer[fd] = next_line(stat_buffer[fd]);
+	if (stat_buffer[fd] == NULL)
+		free (stat_buffer[fd]);
 	return (line);
 }
