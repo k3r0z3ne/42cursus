@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 11:04:29 by arotondo          #+#    #+#             */
-/*   Updated: 2024/08/29 17:59:24 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/09/02 18:28:36 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,47 +19,47 @@ int	is_key(int key)
 	key == 121 || key == 122 || key == 97 || key == 115 || key == 118);
 }
 
-void	do_key(int key, env *data)
+void	do_key(int key, env *data, points *cd)
 {
 	if (key == 65361)
-		data->shift_x -= 10;
+		data->shift_x -= 15;
 	if (key == 65363)
-		data->shift_x += 10;
+		data->shift_x += 15;
 	if (key == 65364)
-		data->shift_y += 10;
+		data->shift_y += 15;
 	if (key == 65362)
-		data->shift_y -= 10;
+		data->shift_y -= 15;
 	if (key == 65451)
-		data->scale += 1;
+		data->scale += 3;
 	if (key == 65453)
-		data->scale -= 1;
+		data->scale -= 3;
 	if (key == 97)
-		data->angle += 0.05;
+		data->angle += 0.1;
 	if (key == 115)
-		data->angle -= 0.05;
+		data->angle -= 0.1;
 	if (key == 118)
-		orthographic(data);
+		orthographic(data, cd);
 }
 
 void	rotate(int key, env *data)
 {
 	if (key == 120)
-		data->alpha += 0.05;
+		data->alpha += 0.3;
 	if (key == 121)
-		data->tetha += 0.05;
+		data->tetha += 0.3;
 	if (key == 122)
-		data->gamma += 0.05;
+		data->gamma += 0.3;
 }
 
-int	key_dealer(int key, env *data)
+int	key_dealer(int key, env *data, points cd)
 {
 	if (is_key(key))
 	{
 		mlx_clear_window(data->mlx_ptr, data->win_ptr);
-		do_key(key, data);
+		do_key(key, data, &cd);
 		draw_line(data);
 	}
-	if (key >= 120 && key <= 122)
+	if (key == 120 || key == 121 || key == 122)
 	{
 		mlx_clear_window(data->mlx_ptr, data->win_ptr);
 		rotate(key, data);

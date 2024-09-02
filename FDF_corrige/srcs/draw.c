@@ -6,74 +6,68 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 15:09:16 by arotondo          #+#    #+#             */
-/*   Updated: 2024/08/30 18:55:58 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/09/02 20:00:57 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-void	bresenham(env *data)
+void	bresenham(env *data, points cd)
 {
 	float	x_step;
 	float	y_step;
-	float	x_tmp;
-	float	y_tmp;
 	int		max;
 
-	data->z = data->matrix[(int)data->y][(int)data->x];
-	data->z1 = data->matrix[(int)data->y1][(int)data->x1];
-	// printf("data->x1 = %f\n", data->x1);
-	// printf("data->z = %f\n", data->z);
-	// printf("data->z1 = %f\n", data->z1);
-	x_tmp = data->x;
-	y_tmp = data->y;
-	select_color(data->z1, data);
-	set_all(data);
-	// key_rotation(data);
-	x_step = data->x1 - data->x;
-	y_step = data->y1 - data->y;
-	// printf("x_step = %f\n", x_step);
+	data->z = data->matrix[(int)cd.y][(int)cd.x];
+	data->z1 = data->matrix[(int)cd.y1][(int)cd.x1];
+	set_all(data, &cd);
+	set_color(data, &cd);
+	key_rotation(data, &cd);
+	x_step = cd.x1 - cd.x;
+	y_step = cd.y1 - cd.y;
 	max = MAX(SIGN(x_step), SIGN(y_step));
 	x_step /= max;
 	y_step /= max;
-	while ((int)(x_tmp - data->x1) || (int)(y_tmp - data->y1))
+	while ((int)(cd.x - cd.x1) || (int)(cd.y - cd.y1))
 	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x_tmp, y_tmp, data->color);
-		x_tmp += x_step;
-		y_tmp += y_step;
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, cd.x, cd.y, data->color);
+		cd.x += x_step;
+		cd.y += y_step;
 	}
-	// printf("x = %f\n", x);
-	// printf("after pixel_put,,data->x = %f\n", data->x);
-	// printf("after pixel_put,,data->x1 = %f\n", data->x1);
+}
+
+void	init_tmp(points *cd_tmp, points cd)
+{
+	*cd_tmp = cd;
+	cd_tmp->y1 = cd.y;
+	cd_tmp->x1 = cd.x;
 }
 
 void	draw_line(env *data)
 {
-	// float	x;
-	// float	y;
+	points	cd;
+	points	cd_tmp;
 
-	data->y = 0;
-	while (data->y < data->height)
+	cd.y = 0;
+	while (cd.y < data->height)
 	{
-		printf("data->x = %f\n", data->x);
-		printf("data->width = %d\n", data->width);
-		data->x = 0;
-		while (data->x < data->width)
+		cd.x = 0;
+		while (cd.x < data->width)
 		{
-			if (data->x < data->width - 1)
+			if (cd.x < data->width - 1)
 			{
-				data->x1 = data->x + 1;
-				printf("data->x1 = %f\n", data->x1);
-				bresenham(data);
+				init_tmp(&cd_tmp, cd);
+				cd_tmp.x1 = cd.x + 1;
+				bresenham(data, cd_tmp);
 			}
-			if (data->y < data->height - 1)
+			if (cd.y < data->height - 1)
 			{
-				data->y1 = data->y + 1;
-				bresenham(data);
+				init_tmp(&cd_tmp, cd);
+				cd_tmp.y1 = cd.y + 1;
+				bresenham(data, cd_tmp);
 			}
-			data->x++;
-			// printf("after bresenham : %f\n", data->x);
+			cd.x++;
 		}
-		data->y++;
+		cd.y++;
 	}
 }

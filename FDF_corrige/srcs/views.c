@@ -6,32 +6,36 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 16:01:10 by arotondo          #+#    #+#             */
-/*   Updated: 2024/08/08 19:30:47 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/09/02 17:47:27 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-void	isometric(env *data)
+void	isometric(float z, env *data, points *cd)
 {
-	float	tmp;
+	//float	tmp;
 
-	tmp = data->x;
-	data->x = (tmp - data->y) * cos(data->angle);
-	data->y = (tmp + data->y) * sin(data->angle) - data->z;
+//	tmp = cd->x;
+	cd->x = (cd->x - cd->y) * cos(data->angle);
+	cd->y = (cd->x + cd->y) * sin(data->angle) - z;
 }
 
-void	isometric1(env *data)
+void	isometric1(float z1, env *data, points *cd)
 {
-	float	tmp;
+//	float	tmp;
 
-	tmp = data->x;
-	data->x = (data->x - data->y) * cos(data->angle);
-	data->y = (tmp + data->y) * sin(data->angle) - data->z1;
+//	tmp = cd->x1;
+	cd->x1 = (cd->x1 - cd->y1) * cos(data->angle);
+	cd->y1 = (cd->x1 + cd->y1) * sin(data->angle) - z1;
 }
-void	orthographic(env *data)
+
+void	orthographic(env *data, points *cd)
 {
+	// float	tmp;
+	
+	// tmp = cd->x;
 	data->angle = 0;
-	data->x = (data->x - data->y) * cos(data->angle);
-	data->y = (data->x + data->y) * sin(data->angle) - data->z;
+	cd->x = (cd->x - cd->y) * cos(data->angle);
+	cd->y = (cd->x + cd->y) * sin(data->angle) - data->z;
 }

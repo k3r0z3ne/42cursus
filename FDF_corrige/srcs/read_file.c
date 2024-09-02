@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 12:55:32 by arotondo          #+#    #+#             */
-/*   Updated: 2024/08/08 19:01:47 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:12:31 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,30 +88,30 @@ void	fill_matrix(int *h_line, char *line)
 	free (tab);
 }
 
-void	read_file(char *file_name, env *data)
+int	read_file(char *file_name, env *data)
 {
 	int		i;
 	int		fd;
 
 	fd = open(file_name, O_RDONLY, 0);
+	if (fd < 0)
+		return (2);
 	data->height = get_height(file_name);
 	data->width = get_width(file_name);
 	data->matrix = (int **)ft_calloc((data->height), sizeof(int *));
 	if (!data->matrix)
-		return (free_tab(data->matrix, data));
-	i = 0;
-	while (i < data->height)
+		return (free_tab(data->matrix, data), 1);
+	i = -1;
+	while (++i < data->height)
 	{
 		data->matrix[i] = (int *)ft_calloc((data->width), sizeof(int));
 		if (!(data->matrix[i]))
 		{
 			free_tab(data->matrix, data);
-			close (fd);
-			return ;
+			return (close (fd), 1);
 		}
-		i++;
 	}
 	fill_tab(i, fd, data);
 	get_next_line(-1);
-	close (fd);
+	return (close (fd), 0);
 }

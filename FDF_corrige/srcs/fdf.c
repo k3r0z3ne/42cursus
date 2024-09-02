@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 16:00:02 by arotondo          #+#    #+#             */
-/*   Updated: 2024/08/29 17:59:40 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/09/02 18:25:03 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,14 @@ int	close_win(env *data)
 
 int	main(int argc, char **argv)
 {
-	env	data;
+	env		data;
+	// points	cd;
 
 	if (argc != 2)
-		return (2);
-	read_file(argv[1], &data);
+		return (strerror(errno), 2);
+	if (read_file(argv[1], &data) != 0)
+		return (1);
 	set(&data);
-	printf("main, x1 %f\n", data.x1);
 	if (init_pointers(&data) != 0)
 	{
 		free_tab(data.matrix, &data);
