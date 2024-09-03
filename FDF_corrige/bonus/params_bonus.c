@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   params.c                                           :+:      :+:    :+:   */
+/*   params_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 20:20:21 by arotondo          #+#    #+#             */
-/*   Updated: 2024/09/03 15:59:51 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:02:35 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	set(t_env *data)
 {
 	data->scale = 30;
-	data->win_x = 1920 / 2;
+	data->win_x = 1920;
 	data->win_y = 1080;
 	data->angle = 0.8;
 	data->shift_x = data->win_x / 2.15;
-	data->shift_y = data->win_y / 2;
+	data->shift_y = data->win_y / 2.5;
 	data->alpha = 0;
 	data->gamma = 0;
 	data->tetha = 0;

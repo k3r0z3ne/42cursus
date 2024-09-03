@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   draw_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 15:09:16 by arotondo          #+#    #+#             */
-/*   Updated: 2024/09/03 15:58:22 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:01:37 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	bresenham(t_env *data, t_points cd)
 
 	data->z = data->matrix[(int)cd.y][(int)cd.x];
 	data->z1 = data->matrix[(int)cd.y1][(int)cd.x1];
+	set_color(data);
 	set_all(data, &cd);
+	key_rotation(data, &cd);
 	x_step = cd.x1 - cd.x;
 	y_step = cd.y1 - cd.y;
 	max = MAX(SIGN(x_step), SIGN(y_step));
@@ -28,7 +30,7 @@ void	bresenham(t_env *data, t_points cd)
 	y_step /= max;
 	while ((int)(cd.x - cd.x1) || (int)(cd.y - cd.y1))
 	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, cd.x, cd.y, WHITE);
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, cd.x, cd.y, data->color);
 		cd.x += x_step;
 		cd.y += y_step;
 	}
