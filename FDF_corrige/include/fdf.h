@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 16:20:11 by arotondo          #+#    #+#             */
-/*   Updated: 2024/09/04 17:07:43 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:48:32 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 
 # include "../libft/libft.h"
 # include "../libft/get_next_line.h"
-# include "../minilibx-linux/mlx.h"
-# include "../minilibx-linux/mlx_int.h"
+# include "../minilibx_linux/mlx.h"
+# include "../minilibx_linux/mlx_int.h"
 # include <stdlib.h>
 # include <math.h>
 # include <fcntl.h>
