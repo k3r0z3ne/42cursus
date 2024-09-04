@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 20:20:21 by arotondo          #+#    #+#             */
-/*   Updated: 2024/09/03 15:59:51 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/09/04 13:39:51 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	set(t_env *data)
 {
+	data->color[0] = WHITE;
 	data->scale = 30;
 	data->win_x = 1920 / 2;
 	data->win_y = 1080;

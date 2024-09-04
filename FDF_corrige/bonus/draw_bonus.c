@@ -6,11 +6,27 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 15:09:16 by arotondo          #+#    #+#             */
-/*   Updated: 2024/09/03 16:01:37 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:08:33 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
+
+float	ft_max(float x_step, float y_step)
+{
+	if (x_step > y_step)
+		return (x_step);
+	else
+		return (y_step);
+}
+
+float	ft_sign(float step)
+{
+	if (step < 0)
+		return (-step);
+	else
+		return (step);
+}
 
 void	bresenham(t_env *data, t_points cd)
 {
@@ -25,12 +41,13 @@ void	bresenham(t_env *data, t_points cd)
 	key_rotation(data, &cd);
 	x_step = cd.x1 - cd.x;
 	y_step = cd.y1 - cd.y;
-	max = MAX(SIGN(x_step), SIGN(y_step));
+	max = ft_max(ft_sign(x_step), ft_sign(y_step));
 	x_step /= max;
 	y_step /= max;
 	while ((int)(cd.x - cd.x1) || (int)(cd.y - cd.y1))
 	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, cd.x, cd.y, data->color);
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, cd.x, cd.y, \
+		data->color[data->curr_color]);
 		cd.x += x_step;
 		cd.y += y_step;
 	}

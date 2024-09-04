@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 22:14:05 by arotondo          #+#    #+#             */
-/*   Updated: 2024/09/03 16:01:11 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:07:38 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,27 @@
 
 void	set_color(t_env *data)
 {
-	int	dz;
+	data->color[0] = WHITE;
+	data->color[1] = RED;
+	data->color[2] = GREEN;
+	data->color[3] = BLUE;
+	data->color[4] = PURPLE;
+	data->color[5] = PINK;
+	data->color[6] = YELLOW;
+}
 
-	dz = data->z1 - data->z;
-	if ((dz <= 0) || (dz > data->z1))
-		data->color = PURPLE;
-	else
-		data->color = PURPLE;
+void	change_color(int key, t_env *data)
+{
+	if (key == 99)
+	{
+		data->curr_color++;
+		if (data->curr_color > 6)
+			data->curr_color = 0;
+	}
+	if (key == 102)
+	{
+		data->curr_color--;
+		if (data->curr_color < 0)
+		data->curr_color = 6;
+	}
 }

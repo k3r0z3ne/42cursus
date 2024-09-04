@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 16:20:11 by arotondo          #+#    #+#             */
-/*   Updated: 2024/09/03 14:50:13 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:07:43 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@
 # define PURPLE 0x6600FF
 # define YELLOW 0xFFFF00
 # define PINK 0xFF00FF
-
-# define MAX(x, y) (x > y ? x : y)
-# define SIGN(x) (x < 0 ? -x : x)
 
 # include "../libft/libft.h"
 # include "../libft/get_next_line.h"
@@ -41,7 +38,8 @@ typedef struct s_env
 	float	z1;
 	int		height;
 	int		width;
-	int		color;
+	int		color[7];
+	int		curr_color;
 	int		scale;
 	int		shift_x;
 	int		shift_y;
@@ -75,6 +73,8 @@ int		get_width(char *file_name);
 int		get_height(char *file_name);
 int		count_wd(char *line, char sep);
 
+float	ft_max(float x_step, float y_step);
+float	ft_sign(float step);
 void	bresenham(t_env *data, t_points cd);
 void	init_tmp(t_points *cd_tmp, t_points cd);
 void	draw_line(t_env *data);
@@ -85,6 +85,7 @@ void	focus(t_env *data, t_points *cd);
 void	set_all(t_env *data, t_points *cd);
 
 void	set_color(t_env *data);
+void	change_color(int key, t_env *data);
 
 void	isometric(float z, t_env *data, t_points *cd);
 void	isometric1(float z1, t_env *data, t_points *cd);
@@ -101,5 +102,6 @@ void	rotate_y(t_env *data, t_points *cd);
 void	rotate_z(t_env *data, t_points *cd);
 
 void	free_tab(int **tab, t_env *data);
+void	free_tab2(int *tab, int len);
 
 #endif

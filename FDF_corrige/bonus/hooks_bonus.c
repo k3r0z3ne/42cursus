@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 11:04:29 by arotondo          #+#    #+#             */
-/*   Updated: 2024/09/03 16:02:22 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:00:23 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	is_key(int key)
 {
 	return (key == 65361 || key == 65362 || key == 65363 || key == 65364 || \
 	key == 65451 || key == 65453 || key == 110 || key == 120 || \
-	key == 121 || key == 122 || key == 97 || key == 115 || key == 118);
+	key == 121 || key == 122 || key == 97 || key == 115 || key == 118 || \
+	key == 99 || key == 102);
 }
 
 void	do_key(int key, t_env *data, t_points *cd)
@@ -39,6 +40,8 @@ void	do_key(int key, t_env *data, t_points *cd)
 		data->angle -= 0.1;
 	if (key == 118)
 		orthographic(data, cd);
+	if (key == 99 || key == 102)
+		change_color(key, data);
 }
 
 void	rotate(int key, t_env *data)

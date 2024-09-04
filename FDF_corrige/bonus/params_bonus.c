@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 20:20:21 by arotondo          #+#    #+#             */
-/*   Updated: 2024/09/03 16:02:35 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:03:24 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	set(t_env *data)
 	data->alpha = 0;
 	data->gamma = 0;
 	data->tetha = 0;
+	data->curr_color = 0;
 }
 
 void	zoom(t_env *data, t_points *cd)

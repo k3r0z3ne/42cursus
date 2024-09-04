@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 20:10:56 by arotondo          #+#    #+#             */
-/*   Updated: 2024/07/22 16:27:34 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/09/03 18:15:45 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,8 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 int		ft_lstsize(t_list *lst);
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 char	*get_next_line(int fd);
+char	*read_line(int fd, char *buffer);
+char	*set_line(char *buffer);
+char	*next_line(char *buffer);
 
 #endif
